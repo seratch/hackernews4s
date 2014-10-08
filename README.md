@@ -23,3 +23,7 @@ topStories.foreach(println)
 ## License
 
 The MIT License
+
+## Buid Status
+
+[![Build Status](https://travis-ci.org/seratch/hackernews4s.svg?branch=master)](https://travis-ci.org/seratch/hackernews4s)
