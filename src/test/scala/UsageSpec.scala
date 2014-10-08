@@ -24,7 +24,7 @@ class UsageSpec extends FunSpec with Matchers {
 
     it("retrieves top stories") {
       val items = HackerNews.getTopStories()
-      items.size should equal(100)
+      items.size should equal(10)
     }
 
   }
