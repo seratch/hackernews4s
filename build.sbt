@@ -36,8 +36,8 @@ pomIncludeRepository := { x => false }
 pomExtra := <url>https://github.com/serach/hackernews4s/</url>
   <licenses>
     <license>
-      <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
