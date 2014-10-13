@@ -8,7 +8,7 @@ class UsageSpec extends FunSpec with Matchers {
     it("retrieves items") {
       val item = HackerNews.getItem(ItemId(8863))
       item.isDefined should be(true)
-      item.map(_.by.id) should equal(Some("dhouston"))
+      item.get.by.map(_.id) should equal(Some("dhouston"))
     }
 
     it("retrieves users") {
@@ -25,6 +25,37 @@ class UsageSpec extends FunSpec with Matchers {
     it("retrieves top stories") {
       val items = HackerNews.getTopStories()
       items.size should equal(10)
+    }
+
+    it("retrieves top stories with limit value") {
+      val items = HackerNews.getTopStories(5)
+      items.size should equal(5)
+    }
+
+    it("retrieves the current largest item id via #getMaxItemId") {
+      val itemId: ItemId = HackerNews.getMaxItemId()
+      itemId.id should be > (8447116L)
+    }
+
+    it("retrieves the current largest item id via #getCurrentLargestItemId") {
+      val itemId: ItemId = HackerNews.getCurrentLargestItemId()
+      itemId.id should be > (8447116L)
+    }
+
+    it("retrieves ids for changed items and profiles") {
+      val response: ChangedItemsAndProfiles = HackerNews.getIdsForChangedItemsAndProfiles()
+      response.itemIds.size should be > (0)
+      response.userIds.size should be > (0)
+    }
+
+    it("retrieves changed items") {
+      val items: Seq[Item] = HackerNews.getChangedItems()
+      items.size should be > (0)
+    }
+
+    it("retrieves changed profiles") {
+      val users: Seq[User] = HackerNews.getChangedProfiles()
+      users.size should be > (0)
     }
 
   }

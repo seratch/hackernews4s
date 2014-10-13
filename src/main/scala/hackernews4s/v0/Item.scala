@@ -6,7 +6,7 @@ case class Item(
   id: ItemId,
   deleted: Boolean,
   itemType: ItemType,
-  by: UserId,
+  by: Option[UserId],
   createdAt: DateTime,
   text: String,
   dead: Boolean,

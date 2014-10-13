@@ -11,6 +11,8 @@ trait HackerNews extends Logging {
 
   val BASE_URL = "https://hacker-news.firebaseio.com/v0"
 
+  private[this] val CONCURRENCY: Int = 3
+
   /**
    * Items
    * Stories, comments, jobs, Ask HNs and even polls are just items.
@@ -55,9 +57,59 @@ trait HackerNews extends Logging {
    * Top Stories (Actual Items)
    */
   def getTopStories(limit: Int = 10): Seq[Item] = {
-    getItemIdsForTopStories().take(limit)
-      .par.flatMap(itemId => getItem(itemId))
-      .toIndexedSeq
+    getItemIdsForTopStories().take(limit).grouped(CONCURRENCY).flatMap(ids =>
+      ids.par.flatMap(id => getItem(id)).toIndexedSeq
+    ).toSeq
+  }
+
+  /**
+   * Max Item ID
+   * The current largest item id is at https://hacker-news.firebaseio.com/v0/maxitem.
+   */
+  def getMaxItemId(): ItemId = {
+    val response = HTTP.get(s"${BASE_URL}/maxitem.json")
+    debugLogging("Max Item ID API", response)
+    response.status match {
+      case 200 =>
+        fromJSONString[Long](response.textBody).map(ItemId)
+          .getOrElse(throw new HackerNewsAPIException(200, response.textBody))
+      case s => throw new HackerNewsAPIException(s, response.textBody)
+    }
+  }
+
+  def getCurrentLargestItemId(): ItemId = getMaxItemId()
+
+  /**
+   * Changed Items and Profiles
+   * The item and profile changes are at https://hacker-news.firebaseio.com/v0/updates.
+   */
+  def getIdsForChangedItemsAndProfiles(): ChangedItemsAndProfiles = {
+    val response = HTTP.get(s"${BASE_URL}/updates.json")
+    debugLogging("Changed Items and Profiles API", response)
+    response.status match {
+      case 200 =>
+        fromJSONString[RawChangedItemsAndProfiles](response.textBody).map(_.toChangedItemsAndProfiles)
+          .getOrElse(throw new HackerNewsAPIException(200, response.textBody))
+      case s => throw new HackerNewsAPIException(s, response.textBody)
+    }
+  }
+
+  /**
+   * Retrieve changed item data for ids from "Changed Items and Profiles API".
+   */
+  def getChangedItems(): Seq[Item] = {
+    getIdsForChangedItemsAndProfiles().itemIds.grouped(CONCURRENCY).flatMap(ids =>
+      ids.par.flatMap(itemId => getItem(itemId)).toIndexedSeq
+    ).toSeq
+  }
+
+  /**
+   * Retrieve changed user data for ids from "Changed Items and Profiles API".
+   */
+  def getChangedProfiles(): Seq[User] = {
+    getIdsForChangedItemsAndProfiles().userIds.grouped(CONCURRENCY).flatMap(ids =>
+      ids.par.flatMap(userId => getUser(userId)).toIndexedSeq
+    ).toSeq
   }
 
   private[this] def debugLogging(api: String, response: Response): Unit = {
