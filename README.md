@@ -9,14 +9,14 @@
 ## How to use
 
 ```scala
-libraryDependencies += "com.github.seratch" %% "hackernews4s" % "0.2"
+libraryDependencies += "com.github.seratch" %% "hackernews4s" % "0.3"
 ```
 
 ## APIs
 
 See the scaladocs:
 
-[hackernews4s.v0.HackerNews.scala](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/seratch/hackernews4s_2.11/0.2/hackernews4s_2.11-0.2-javadoc.jar/!/index.html#hackernews4s.v0.HackerNews)
+[hackernews4s.v0.HackerNews.scala](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/seratch/hackernews4s_2.11/0.3/hackernews4s_2.11-0.3-javadoc.jar/!/index.html#hackernews4s.v0.HackerNews)
 
 ## Examples
 
