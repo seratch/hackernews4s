@@ -19,7 +19,7 @@ trait HackerNews extends Logging {
    * They're identified by their ids, which are unique integers, and live under https://hacker-news.firebaseio.com/v0/item/.
    */
   def getItem(itemId: ItemId): Option[Item] = {
-    val response = HTTP.get(s"${BASE_URL}/item/${itemId.id}.json")
+    val response = HTTP.get(req(s"${BASE_URL}/item/${itemId.id}.json"))
     debugLogging("Items API", response)
     response.status match {
       case 200 => fromJSONString[RawItem](response.textBody).map(_.toItem)
@@ -32,7 +32,7 @@ trait HackerNews extends Logging {
    * Users are identified by case-sensitive ids, and live under https://hacker-news.firebaseio.com/v0/user/.
    */
   def getUser(userId: UserId): Option[User] = {
-    val response = HTTP.get(s"${BASE_URL}/user/${userId.id}.json")
+    val response = HTTP.get(req(s"${BASE_URL}/user/${userId.id}.json"))
     debugLogging("Users API", response)
     response.status match {
       case 200 => fromJSONString[RawUser](response.textBody).map(_.toUser)
@@ -45,7 +45,7 @@ trait HackerNews extends Logging {
    * The current top 100 stories are at https://hacker-news.firebaseio.com/v0/topstories.
    */
   def getItemIdsForTopStories(): Seq[ItemId] = {
-    val response = HTTP.get(s"${BASE_URL}/topstories.json")
+    val response = HTTP.get(req(s"${BASE_URL}/topstories.json"))
     debugLogging("Top Stories API", response)
     response.status match {
       case 200 => fromJSONString[Seq[Long]](response.textBody).map(_.map(ItemId)).getOrElse(Nil)
@@ -67,7 +67,7 @@ trait HackerNews extends Logging {
    * The current largest item id is at https://hacker-news.firebaseio.com/v0/maxitem.
    */
   def getMaxItemId(): ItemId = {
-    val response = HTTP.get(s"${BASE_URL}/maxitem.json")
+    val response = HTTP.get(req(s"${BASE_URL}/maxitem.json"))
     debugLogging("Max Item ID API", response)
     response.status match {
       case 200 =>
@@ -84,7 +84,7 @@ trait HackerNews extends Logging {
    * The item and profile changes are at https://hacker-news.firebaseio.com/v0/updates.
    */
   def getIdsForChangedItemsAndProfiles(): ChangedItemsAndProfiles = {
-    val response = HTTP.get(s"${BASE_URL}/updates.json")
+    val response = HTTP.get(req(s"${BASE_URL}/updates.json"))
     debugLogging("Changed Items and Profiles API", response)
     response.status match {
       case 200 =>
@@ -110,6 +110,12 @@ trait HackerNews extends Logging {
     getIdsForChangedItemsAndProfiles().userIds.grouped(CONCURRENCY).flatMap(ids =>
       ids.par.flatMap(userId => getUser(userId)).toIndexedSeq
     ).toSeq
+  }
+
+  private[this] def req(url: String): Request = {
+    val req = new Request(url)
+    req.connectTimeoutMillis(2000) // HackerNews API sometimes rejects connections
+    req
   }
 
   private[this] def debugLogging(api: String, response: Response): Unit = {
