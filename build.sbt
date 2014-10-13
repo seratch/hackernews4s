@@ -2,7 +2,7 @@ organization := "com.github.seratch"
 
 name := "hackernews4s"
 
-version := "0.0"
+version := "0.1"
 
 scalaVersion := "2.11.2"
 
