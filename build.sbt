@@ -17,7 +17,7 @@ libraryDependencies := Seq(
   "org.scalatest"        %% "scalatest"          % "2.2.2" % "test"
 )
 
-parallelExecution in Test := false
+logBuffered in Test := false
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
