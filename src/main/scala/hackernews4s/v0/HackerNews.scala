@@ -133,9 +133,8 @@ trait HackerNews extends Logging {
 
   // creates skinny.http.Request for each API call
   private[this] def req(url: String): Request = {
-    val req = new Request(url)
-    req.connectTimeoutMillis(2000) // HackerNews API sometimes cannot accept new connection
-    req
+    new Request(url)
+      .connectTimeoutMillis(2000) // HackerNews API sometimes cannot accept new connection
   }
 
   private[this] def debugLogging(api: String, response: Response): Unit = {
