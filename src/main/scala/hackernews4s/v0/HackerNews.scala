@@ -1,6 +1,5 @@
 package hackernews4s.v0
 
-import hackernews4s.v0.internal._
 import skinny.http._
 import skinny.logging.Logging
 import skinny.util.JSONStringOps._
@@ -14,10 +13,11 @@ object HackerNews extends HackerNews
  * HackerNews API client
  */
 trait HackerNews extends Logging {
+  import hackernews4s.v0.internal._
 
   val BASE_URL = "https://hacker-news.firebaseio.com/v0"
 
-  private[this] val CONCURRENCY: Int = 3
+  private[this] val CONCURRENCY: Int = 10
 
   /**
    * Items
@@ -30,6 +30,10 @@ trait HackerNews extends Logging {
     debugLogging("Items API", response)
     response.status match {
       case 200 => fromJSONString[RawItem](response.textBody).map(_.toItem)
+      case 401 =>
+        // HackerNews API sometimes returns (temporal?) 401
+        logger.info(s"Failed to access an item (id: ${itemId}) - ${response.textBody}")
+        None
       case s => throw new HackerNewsAPIException(s, response.textBody)
     }
   }
@@ -44,6 +48,10 @@ trait HackerNews extends Logging {
     debugLogging("Users API", response)
     response.status match {
       case 200 => fromJSONString[RawUser](response.textBody).map(_.toUser)
+      case 401 =>
+        // HackerNews API sometimes returns (temporal?) 401
+        logger.info(s"Failed to access an item (id: ${userId}) - ${response.textBody}")
+        None
       case s => throw new HackerNewsAPIException(s, response.textBody)
     }
   }

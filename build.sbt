@@ -17,6 +17,10 @@ libraryDependencies := Seq(
   "org.scalatest"        %% "scalatest"          % "2.2.2" % "test"
 )
 
+initialCommands := """import hackernews4s.v0._"""
+
+parallelExecution in Test := false
+
 logBuffered in Test := false
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
