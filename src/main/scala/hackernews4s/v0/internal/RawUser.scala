@@ -3,7 +3,7 @@ package hackernews4s.v0.internal
 import hackernews4s.v0._
 import org.joda.time.DateTime
 
-case class RawUser(
+private[hackernews4s] case class RawUser(
     id: String,
     delay: Int,
     created: Long,
