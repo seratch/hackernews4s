@@ -15,8 +15,7 @@ object HackerNews extends HackerNews
  * {{{
  * scala> import hackernews4s.v0._
  * scala> val hn = new HackerNews {}
- * scala> hn.getItem(ItemId(123))
- * res0: Option[Item] = Some(Item(ItemId(123),false,Story,Some(UserId(beau)),2007-02-20T07:21:13.000+09:00,,false,None,List(ItemId(33749), ItemId(454556)),Some(http://design.caltech.edu/erik/Misc/design_quotes.html),8,Some(Design Quotations: &#34;And if in fact you do know the exact cost and the exact schedule, chances are that the technology is obsolete.&#34;),List()))
+ * scala> val item: Option[Item] = hn.getItem(ItemId(123))
  * }}}
  */
 trait HackerNews extends Logging {
@@ -34,8 +33,7 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getItem(ItemId(123))
-   * res0: Option[Item] = Some(Item(ItemId(123),false,Story,Some(UserId(beau)),2007-02-20T07:21:13.000+09:00,,false,None,List(ItemId(33749), ItemId(454556)),Some(http://design.caltech.edu/erik/Misc/design_quotes.html),8,Some(Design Quotations: &#34;And if in fact you do know the exact cost and the exact schedule, chances are that the technology is obsolete.&#34;),List()))
+   * scala> val item: Option[Item] = HackerNews.getItem(ItemId(123))
    * }}}
    */
   def getItem(itemId: ItemId): Option[Item] = {
@@ -58,8 +56,7 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getUser(UserId("seratch")).map(_.createdAt)
-   * res0: Option[org.joda.time.DateTime] = Some(2012-02-12T12:10:02.000+09:00)
+   * scala> val user: Option[User] = HackerNews.getUser(UserId("seratch"))
    * }}}
    */
   def getUser(userId: UserId): Option[User] = {
@@ -82,7 +79,8 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getItemIdsForTopStories().size
+   * scala> val ids: Seq[ItemId] = HackerNews.getItemIdsForTopStories()
+   * scala> ids.size
    * res0: Int = 100
    * }}}
    */
@@ -100,7 +98,8 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getTopStories().size
+   * scala> val items: Seq[Item] = HackerNews.getTopStories()
+   * scala> items.size
    * res0: Int = 10
    * }}}
    */
@@ -117,7 +116,8 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getMaxItemId().id > 8447116L
+   * scala> val itemId: ItemId = HackerNews.getMaxItemId()
+   * scala> itemId.id > 8447116L
    * res0: Boolean = true
    * }}}
    */
@@ -135,8 +135,7 @@ trait HackerNews extends Logging {
   /**
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getCurrentLargestItemId().id > 8447116L
-   * res0: Boolean = true
+   * scala> val itemId: ItemId = HackerNews.getCurrentLargestItemId()
    * }}}
    */
   def getCurrentLargestItemId(): ItemId = getMaxItemId()
