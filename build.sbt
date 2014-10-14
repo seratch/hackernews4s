@@ -13,8 +13,9 @@ lazy val skinnyVersion = "1.3.3"
 libraryDependencies := Seq(
   "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
   "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
-  "ch.qos.logback"       %  "logback-classic"    % "1.1.2" % "test",
-  "org.scalatest"        %% "scalatest"          % "2.2.2" % "test"
+  "ch.qos.logback"       %  "logback-classic"    % "1.1.2"  % "test",
+  "org.scalatest"        %% "scalatest"          % "2.2.2"  % "test",
+  "org.scalacheck"       %% "scalacheck"         % "1.11.4" % "test"
 )
 
 initialCommands := """import hackernews4s.v0._"""
@@ -26,6 +27,18 @@ logBuffered in Test := false
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 scalariformSettings
+
+// ------
+// sbt-doctest
+
+doctestSettings
+
+doctestWithDependencies := false
+
+doctestTestFramework := DoctestTestFramework.ScalaTest
+
+// ------
+// publish settings
 
 publishTo <<= version { (v: String) => 
   val nexus = "https://oss.sonatype.org/"

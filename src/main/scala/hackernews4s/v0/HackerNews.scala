@@ -11,6 +11,13 @@ object HackerNews extends HackerNews
 
 /**
  * HackerNews API client
+ *
+ * {{{
+ * scala> import hackernews4s.v0._
+ * scala> val hn = new HackerNews {}
+ * scala> hn.getItem(ItemId(123))
+ * res0: Option[Item] = Some(Item(ItemId(123),false,Story,Some(UserId(beau)),2007-02-20T07:21:13.000+09:00,,false,None,List(ItemId(33749), ItemId(454556)),Some(http://design.caltech.edu/erik/Misc/design_quotes.html),8,Some(Design Quotations: &#34;And if in fact you do know the exact cost and the exact schedule, chances are that the technology is obsolete.&#34;),List()))
+ * }}}
  */
 trait HackerNews extends Logging {
   import hackernews4s.v0.internal._
@@ -20,10 +27,16 @@ trait HackerNews extends Logging {
   private[this] val CONCURRENCY: Int = 10
 
   /**
-   * Items
+   * Retrieves a HackerNews item from Items API.
    *
    * Stories, comments, jobs, Ask HNs and even polls are just items.
    * They're identified by their ids, which are unique integers, and live under https://hacker-news.firebaseio.com/v0/item/.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getItem(ItemId(123))
+   * res0: Option[Item] = Some(Item(ItemId(123),false,Story,Some(UserId(beau)),2007-02-20T07:21:13.000+09:00,,false,None,List(ItemId(33749), ItemId(454556)),Some(http://design.caltech.edu/erik/Misc/design_quotes.html),8,Some(Design Quotations: &#34;And if in fact you do know the exact cost and the exact schedule, chances are that the technology is obsolete.&#34;),List()))
+   * }}}
    */
   def getItem(itemId: ItemId): Option[Item] = {
     val response = HTTP.get(req(s"${BASE_URL}/item/${itemId.id}.json"))
@@ -39,9 +52,15 @@ trait HackerNews extends Logging {
   }
 
   /**
-   * Users
+   * Retrieves a HackerNews user information from Users API.
    *
    * Users are identified by case-sensitive ids, and live under https://hacker-news.firebaseio.com/v0/user/.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getUser(UserId("seratch")).map(_.createdAt)
+   * res0: Option[org.joda.time.DateTime] = Some(2012-02-12T12:10:02.000+09:00)
+   * }}}
    */
   def getUser(userId: UserId): Option[User] = {
     val response = HTTP.get(req(s"${BASE_URL}/user/${userId.id}.json"))
@@ -57,9 +76,15 @@ trait HackerNews extends Logging {
   }
 
   /**
-   * Top Stories
+   * Retrieves a HackerNews top stories' item ids from Top Stories API.
    *
    * The current top 100 stories are at https://hacker-news.firebaseio.com/v0/topstories.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getItemIdsForTopStories().size
+   * res0: Int = 100
+   * }}}
    */
   def getItemIdsForTopStories(): Seq[ItemId] = {
     val response = HTTP.get(req(s"${BASE_URL}/topstories.json"))
@@ -72,6 +97,12 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves actual top stories.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getTopStories().size
+   * res0: Int = 10
+   * }}}
    */
   def getTopStories(limit: Int = 10): Seq[Item] = {
     getItemIdsForTopStories().take(limit).grouped(CONCURRENCY).flatMap(ids =>
@@ -83,6 +114,12 @@ trait HackerNews extends Logging {
    * Max Item ID
    *
    * The current largest item id is at https://hacker-news.firebaseio.com/v0/maxitem.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getMaxItemId().id > 8447116L
+   * res0: Boolean = true
+   * }}}
    */
   def getMaxItemId(): ItemId = {
     val response = HTTP.get(req(s"${BASE_URL}/maxitem.json"))
@@ -95,12 +132,24 @@ trait HackerNews extends Logging {
     }
   }
 
+  /**
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getCurrentLargestItemId().id > 8447116L
+   * res0: Boolean = true
+   * }}}
+   */
   def getCurrentLargestItemId(): ItemId = getMaxItemId()
 
   /**
-   * Changed Items and Profiles
+   * Retrieves changed item ids and user ids from Changed Items and Profiles API.
    *
    * The item and profile changes are at https://hacker-news.firebaseio.com/v0/updates.
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> val ChangedItemsAndProfiles(itemIds, userIds) = HackerNews.getIdsForChangedItemsAndProfiles()
+   * }}}
    */
   def getIdsForChangedItemsAndProfiles(): ChangedItemsAndProfiles = {
     val response = HTTP.get(req(s"${BASE_URL}/updates.json"))
@@ -115,6 +164,12 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves actual changed item data for ids from "Changed Items and Profiles API".
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getChangedItems().size > 0
+   * res0: Boolean = true
+   * }}}
    */
   def getChangedItems(): Seq[Item] = {
     getIdsForChangedItemsAndProfiles().itemIds.grouped(CONCURRENCY).flatMap(ids =>
@@ -124,6 +179,12 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves actual changed user data for ids from "Changed Items and Profiles API".
+   *
+   * {{{
+   * scala> import hackernews4s.v0._
+   * scala> HackerNews.getChangedProfiles().size > 0
+   * res0: Boolean = true
+   * }}}
    */
   def getChangedProfiles(): Seq[User] = {
     getIdsForChangedItemsAndProfiles().userIds.grouped(CONCURRENCY).flatMap(ids =>

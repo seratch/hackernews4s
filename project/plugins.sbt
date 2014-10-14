@@ -8,5 +8,7 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8.3")
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
 
+addSbtPlugin("com.github.tkawachi" % "sbt-doctest" % "0.3.1")
+
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
