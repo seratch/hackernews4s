@@ -1,5 +1,7 @@
 # HackerNews API Client in Scala
 
+This library is made for Scala hackers.
+
 ## HackerNews API?
 
 - http://blog.ycombinator.com/hacker-news-api
@@ -9,14 +11,14 @@
 ## How to use
 
 ```scala
-libraryDependencies += "com.github.seratch" %% "hackernews4s" % "0.3"
+libraryDependencies += "com.github.seratch" %% "hackernews4s" % "0.4"
 ```
 
 ## APIs
 
 See the scaladocs:
 
-[hackernews4s.v0.HackerNews.scala](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/seratch/hackernews4s_2.11/0.3/hackernews4s_2.11-0.3-javadoc.jar/!/index.html#hackernews4s.v0.HackerNews)
+[hackernews4s.v0.HackerNews.scala](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/seratch/hackernews4s_2.11/0.4/hackernews4s_2.11-0.4-javadoc.jar/!/index.html#hackernews4s.v0.HackerNews)
 
 ## Examples
 
@@ -26,6 +28,12 @@ val topStories: Seq[Item] = HackerNews.getTopStories()
 topStories.foreach(println)
 ```
 
+See [HackerNews.scala](https://github.com/seratch/hackernews4s/blob/master/src/main/scala/hackernews4s/v0/HackerNews.scala) for details:
+
+https://github.com/seratch/hackernews4s/blob/master/src/main/scala/hackernews4s/v0/HackerNews.scala
+
+You can try the code examples in comments. We confirm they're valid code by using [sbt-doctest](https://github.com/tkawachi/sbt-doctest).
+
 ## License
 
 The MIT License
@@ -33,3 +41,4 @@ The MIT License
 ## Buid Status
 
 [![Build Status](https://travis-ci.org/seratch/hackernews4s.svg?branch=master)](https://travis-ci.org/seratch/hackernews4s)
+

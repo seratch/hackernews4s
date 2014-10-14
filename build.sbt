@@ -2,7 +2,7 @@ organization := "com.github.seratch"
 
 name := "hackernews4s"
 
-version := "0.3"
+version := "0.4"
 
 scalaVersion := "2.11.2"
 
@@ -26,6 +26,9 @@ logBuffered in Test := false
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+// ------
+// scalariform
+
 scalariformSettings
 
 // ------
@@ -39,6 +42,8 @@ doctestTestFramework := DoctestTestFramework.ScalaTest
 
 // ------
 // publish settings
+
+sonatypeSettings
 
 publishTo <<= version { (v: String) => 
   val nexus = "https://oss.sonatype.org/"
