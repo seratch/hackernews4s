@@ -1,9 +1,10 @@
+lazy val skinnyVersion = "1.3.+"
+
 organization := "com.github.seratch"
 name := "hackernews4s"
 version := "0.4"
 scalaVersion := "2.11.4"
 crossScalaVersions := Seq("2.10.4", "2.11.4")
-lazy val skinnyVersion = "1.3.+"
 libraryDependencies := Seq(
   "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
   "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
@@ -11,6 +12,7 @@ libraryDependencies := Seq(
   "org.scalatest"        %% "scalatest"          % "2.2.+"  % "test",
   "org.scalacheck"       %% "scalacheck"         % "1.12.+" % "test"
 )
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 initialCommands := """import hackernews4s.v0._"""
 parallelExecution in Test := false
 logBuffered in Test := false
