@@ -3,8 +3,8 @@ lazy val skinnyVersion = "1.3.+"
 organization := "com.github.seratch"
 name := "hackernews4s"
 version := "0.4"
-scalaVersion := "2.11.4"
-crossScalaVersions := Seq("2.10.4", "2.11.4")
+scalaVersion := "2.11.5"
+crossScalaVersions := Seq("2.10.4", "2.11.5")
 libraryDependencies := Seq(
   "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
   "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
