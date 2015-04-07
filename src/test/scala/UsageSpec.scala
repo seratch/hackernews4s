@@ -19,7 +19,7 @@ class UsageSpec extends FunSpec with Matchers {
 
     it("retrieves ids for top stories") {
       val itemIds = HackerNews.getItemIdsForTopStories()
-      itemIds.size should equal(100)
+      itemIds.size should equal(500)
     }
 
     it("retrieves top stories") {

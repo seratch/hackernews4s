@@ -81,7 +81,7 @@ trait HackerNews extends Logging {
    * scala> import hackernews4s.v0._
    * scala> val ids: Seq[ItemId] = HackerNews.getItemIdsForTopStories()
    * scala> ids.size
-   * res0: Int = 100
+   * res0: Int = 500
    * }}}
    */
   def getItemIdsForTopStories(): Seq[ItemId] = {
