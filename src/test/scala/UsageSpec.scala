@@ -32,6 +32,51 @@ class UsageSpec extends FunSpec with Matchers {
       items.size should equal(5)
     }
 
+    it("retrieves ids for new stories") {
+      val itemIds = HackerNews.getItemIdsForNewStories()
+      itemIds.size should equal(500)
+    }
+
+    it("retrieves new stories") {
+      val items = HackerNews.getNewStories()
+      items.size should equal(10)
+    }
+
+    it("retrieves new stories with limit value") {
+      val items = HackerNews.getNewStories(5)
+      items.size should equal(5)
+    }
+
+    it("retrieves ids for ask stories") {
+      val itemIds = HackerNews.getItemIdsForAskStories()
+      itemIds.size should be > (10)
+    }
+
+    it("retrieves ask stories") {
+      val items = HackerNews.getAskStories()
+      items.size should equal(10)
+    }
+
+    it("retrieves ask stories with limit value") {
+      val items = HackerNews.getAskStories(5)
+      items.size should equal(5)
+    }
+
+    it("retrieves ids for job stories") {
+      val itemIds = HackerNews.getItemIdsForJobStories()
+      itemIds.size should be > (10)
+    }
+
+    it("retrieves job stories") {
+      val items = HackerNews.getJobStories()
+      items.size should equal(10)
+    }
+
+    it("retrieves job stories with limit value") {
+      val items = HackerNews.getJobStories(5)
+      items.size should equal(5)
+    }
+
     it("retrieves the current largest item id via #getMaxItemId") {
       val itemId: ItemId = HackerNews.getMaxItemId()
       itemId.id should be > (8447116L)
