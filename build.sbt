@@ -1,44 +1,27 @@
 lazy val skinnyVersion = "1.3.+"
 
-organization := "com.github.seratch"
-name := "hackernews4s"
-version := "0.4.1"
-scalaVersion := "2.11.6"
-crossScalaVersions := Seq("2.10.5", "2.11.6")
-libraryDependencies := Seq(
-  "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
-  "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
-  "ch.qos.logback"       %  "logback-classic"    % "1.1.+"  % "test",
-  "org.scalatest"        %% "scalatest"          % "2.2.+"  % "test",
-  "org.scalacheck"       %% "scalacheck"         % "1.12.+" % "test"
-)
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
-initialCommands := """import hackernews4s.v0._"""
-parallelExecution in Test := false
-logBuffered in Test := false
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
-
-// ------
-// scalariform
-scalariformSettings
-
-// ------
-// sbt-doctest
-doctestSettings
-doctestWithDependencies := false
-doctestTestFramework := DoctestTestFramework.ScalaTest
-
-// ------
-// publish settings
-sonatypeSettings
-publishTo <<= version { (v: String) => 
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
-publishMavenStyle := true
-pomIncludeRepository := { x => false }
-pomExtra := <url>https://github.com/serach/hackernews4s/</url>
+lazy val root = (project in file(".")).settings(
+  organization := "com.github.seratch",
+  name := "hackernews4s",
+  version := "0.5.0-SNAPSHOT",
+  scalaVersion := "2.11.6",
+  crossScalaVersions := Seq("2.10.5", "2.11.6"),
+  libraryDependencies ++= Seq(
+    "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
+    "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
+    "ch.qos.logback"       %  "logback-classic"    % "1.1.+"  % "test",
+    "org.scalatest"        %% "scalatest"          % "2.2.+"  % "test",
+    "org.scalacheck"       %% "scalacheck"         % "1.12.+" % "test"
+  ),
+  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
+  initialCommands := """import hackernews4s.v0._""",
+  parallelExecution in Test := false,
+  logBuffered in Test := false,
+  doctestWithDependencies := false,
+  doctestTestFramework := DoctestTestFramework.ScalaTest,
+  publishMavenStyle := true,
+  pomIncludeRepository := { x => false },
+  pomExtra := <url>https://github.com/serach/hackernews4s/</url>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -57,4 +40,5 @@ pomExtra := <url>https://github.com/serach/hackernews4s/</url>
       <url>http://git.io/sera</url>
     </developer>
   </developers>
-  
+).settings(scalariformSettings: _*)
+ .settings(doctestSettings: _*)
