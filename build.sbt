@@ -3,9 +3,9 @@ lazy val skinnyVersion = "1.3.+"
 lazy val root = (project in file(".")).settings(
   organization := "com.github.seratch",
   name := "hackernews4s",
-  version := "0.5.0",
-  scalaVersion := "2.11.6",
-  crossScalaVersions := Seq("2.10.5", "2.11.6"),
+  version := "0.5.1-SNAPSHOT",
+  scalaVersion := "2.11.7",
+  crossScalaVersions := Seq("2.10.6", "2.11.7"),
   libraryDependencies ++= Seq(
     "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
     "org.skinny-framework" %% "skinny-json"        % skinnyVersion,

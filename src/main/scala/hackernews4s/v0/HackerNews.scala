@@ -149,8 +149,6 @@ trait HackerNews extends Logging {
    * {{{
    * scala> import hackernews4s.v0._
    * scala> val items: Seq[Item] = HackerNews.getAskStories()
-   * scala> items.size
-   * res0: Int = 10
    * }}}
    */
   def getAskStories(limit: Int = 10): Seq[Item] = toItems(getItemIdsForAskStories().take(limit))
@@ -176,8 +174,6 @@ trait HackerNews extends Logging {
    * {{{
    * scala> import hackernews4s.v0._
    * scala> val items: Seq[Item] = HackerNews.getShowStories()
-   * scala> items.size
-   * res0: Int = 10
    * }}}
    */
   def getShowStories(limit: Int = 10): Seq[Item] = toItems(getItemIdsForShowStories().take(limit))
