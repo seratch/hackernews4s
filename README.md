@@ -1,5 +1,8 @@
 # HackerNews API Client in Scala
 
+[![Build Status](https://travis-ci.org/seratch/hackernews4s.svg?branch=master)](https://travis-ci.org/seratch/hackernews4s)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.seratch/hackernews4s_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.seratch/hackernews4s_2.11)
+
 This library is made for Scala hackers.
 
 ## HackerNews API?
@@ -33,8 +36,3 @@ You can try the code examples in comments. We confirm they're valid code by usin
 ## License
 
 The MIT License
-
-## Buid Status
-
-[![Build Status](https://travis-ci.org/seratch/hackernews4s.svg?branch=master)](https://travis-ci.org/seratch/hackernews4s)
-
