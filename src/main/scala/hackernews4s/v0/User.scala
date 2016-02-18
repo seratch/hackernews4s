@@ -8,4 +8,5 @@ case class User(
   delay: Long,
   createdAt: DateTime,
   karma: Long,
-  submitted: Seq[ItemId])
+  submitted: Seq[ItemId]
+)

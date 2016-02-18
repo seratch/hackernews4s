@@ -9,7 +9,8 @@ private[hackernews4s] case class RawUser(
     created: Long,
     karma: Int,
     about: Option[String],
-    submitted: Seq[Long]) {
+    submitted: Seq[Long]
+) {
 
   def toUser: User = new User(
     id = UserId(id),

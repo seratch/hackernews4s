@@ -18,7 +18,8 @@ private[hackernews4s] case class RawItem(
     url: Option[String],
     score: Option[Int],
     title: Option[String],
-    parts: Seq[String]) {
+    parts: Seq[String]
+) {
 
   def toItem: Item = new Item(
     id = ItemId(id),

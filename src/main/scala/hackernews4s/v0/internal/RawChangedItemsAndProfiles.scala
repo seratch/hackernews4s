@@ -4,7 +4,8 @@ import hackernews4s.v0._
 
 private[hackernews4s] case class RawChangedItemsAndProfiles(
     items: Seq[Long],
-    profiles: Seq[String]) {
+    profiles: Seq[String]
+) {
 
   def toChangedItemsAndProfiles: ChangedItemsAndProfiles = new ChangedItemsAndProfiles(
     itemIds = items.map(ItemId),

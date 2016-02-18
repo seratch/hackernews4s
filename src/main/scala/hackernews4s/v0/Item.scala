@@ -15,4 +15,5 @@ case class Item(
   url: Option[String],
   score: Int,
   title: Option[String],
-  parts: Seq[String])
+  parts: Seq[String]
+)

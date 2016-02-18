@@ -2,7 +2,8 @@ package hackernews4s.v0
 
 import skinny.http._
 import skinny.logging.Logging
-import skinny.util.JSONStringOps._
+import skinny.json4s.JSONStringOps._
+import scala.util._
 
 /**
  * HackerNews API client
@@ -39,7 +40,13 @@ trait HackerNews extends Logging {
     val response = HTTP.get(req(s"${BASE_URL}/item/${itemId.id}.json"))
     debugLogging("Items API", response)
     response.status match {
-      case 200 => fromJSONString[RawItem](response.textBody).map(_.toItem)
+      case 200 =>
+        fromJSONString[RawItem](response.textBody) match {
+          case Success(rawItem) => Some(rawItem.toItem)
+          case Failure(error) =>
+            logger.info("Failed to parse response body", error)
+            None
+        }
       case 401 =>
         // HackerNews API sometimes returns (temporal?) 401
         logger.info(s"Failed to access an item (id: ${itemId}) - ${response.textBody}")
@@ -61,7 +68,13 @@ trait HackerNews extends Logging {
     val response = HTTP.get(req(s"${BASE_URL}/user/${userId.id}.json"))
     debugLogging("Users API", response)
     response.status match {
-      case 200 => fromJSONString[RawUser](response.textBody).map(_.toUser)
+      case 200 =>
+        fromJSONString[RawUser](response.textBody) match {
+          case Success(rawUser) => Some(rawUser.toUser)
+          case Failure(error) =>
+            logger.info("Failed to parse response body", error)
+            None
+        }
       case 401 =>
         // HackerNews API sometimes returns (temporal?) 401
         logger.info(s"Failed to access an item (id: ${userId}) - ${response.textBody}")
@@ -273,14 +286,13 @@ trait HackerNews extends Logging {
    *
    * {{{
    * scala> import hackernews4s.v0._
-   * scala> HackerNews.getChangedProfiles().size > 0
+   * scala> HackerNews.getChangedProfiles().size >= 0
    * res0: Boolean = true
    * }}}
    */
   def getChangedProfiles(): Seq[User] = {
     getIdsForChangedItemsAndProfiles().userIds.grouped(CONCURRENCY).flatMap(ids =>
-      ids.par.flatMap(userId => getUser(userId)).toIndexedSeq
-    ).toSeq
+      ids.par.flatMap(userId => getUser(userId)).toIndexedSeq).toSeq
   }
 
   // creates skinny.http.Request for each API call
@@ -298,8 +310,7 @@ trait HackerNews extends Logging {
 
   private[this] def toItems(itemIds: Seq[ItemId]): Seq[Item] = {
     itemIds.grouped(CONCURRENCY).flatMap(ids =>
-      ids.par.flatMap(id => getItem(id)).toIndexedSeq
-    ).toSeq
+      ids.par.flatMap(id => getItem(id)).toIndexedSeq).toSeq
   }
 
   private[this] def debugLogging(api: String, response: Response): Unit = {
