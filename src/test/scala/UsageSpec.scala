@@ -12,9 +12,9 @@ class UsageSpec extends FunSpec with Matchers {
     }
 
     it("retrieves users") {
-      val user = HackerNews.getUser(UserId("jl"))
+      val user = HackerNews.getUser(UserId("dhouston"))
       user.isDefined should be(true)
-      user.map(_.about) should equal(Some(Some("This is a test")))
+      user.map(_.about) should equal(Some(Some("Founder&#x2F;CEO of Dropbox (http:&#x2F;&#x2F;www.dropbox.com ; yc summer &#x27;07)")))
     }
 
     it("retrieves ids for top stories") {

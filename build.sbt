@@ -1,17 +1,17 @@
-lazy val skinnyVersion = "2.0.+"
+lazy val skinnyVersion = "2.3.0-M1"
 
 lazy val root = (project in file(".")).settings(
   organization := "com.github.seratch",
   name := "hackernews4s",
   version := "0.6.1-SNAPSHOT",
-  scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.6", "2.11.7"),
+  scalaVersion := "2.12.0",
+  crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6"),
   libraryDependencies ++= Seq(
     "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
     "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
     "ch.qos.logback"       %  "logback-classic"    % "1.1.+"  % "test",
-    "org.scalatest"        %% "scalatest"          % "2.2.+"  % "test",
-    "org.scalacheck"       %% "scalacheck"         % "1.12.+" % "test"
+    "org.scalatest"        %% "scalatest"          % "3.0.0"  % "test",
+    "org.scalacheck"       %% "scalacheck"         % "1.13.+" % "test"
   ),
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   initialCommands := """import hackernews4s.v0._""",
