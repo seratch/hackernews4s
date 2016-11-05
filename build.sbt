@@ -1,9 +1,9 @@
-lazy val skinnyVersion = "2.3.0-M1"
+lazy val skinnyVersion = "2.3.0-RC1"
 
 lazy val root = (project in file(".")).settings(
   organization := "com.github.seratch",
   name := "hackernews4s",
-  version := "0.6.1-SNAPSHOT",
+  version := "0.6.1",
   scalaVersion := "2.12.0",
   crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6"),
   libraryDependencies ++= Seq(
@@ -41,4 +41,3 @@ lazy val root = (project in file(".")).settings(
     </developer>
   </developers>
 ).settings(scalariformSettings)
- .settings(doctestSettings)
