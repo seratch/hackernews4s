@@ -85,13 +85,13 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves HackerNews top stories' item ids from Top Stories API.
-   * The current top 500 stories are at https://hacker-news.firebaseio.com/v0/topstories.
+   * The current top 400+ stories are at https://hacker-news.firebaseio.com/v0/topstories.
    *
    * {{{
    * scala> import hackernews4s.v0._
    * scala> val ids: Seq[ItemId] = HackerNews.getItemIdsForTopStories()
-   * scala> ids.size
-   * res0: Int = 500
+   * scala> ids.size >= 400
+   * res0: Boolean = true
    * }}}
    */
   def getItemIdsForTopStories(): Seq[ItemId] = {
@@ -114,13 +114,13 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves HackerNews top stories' item ids from New Stories API.
-   * The current new 500 stories are at https://hacker-news.firebaseio.com/v0/newstories.
+   * The current new 400+ stories are at https://hacker-news.firebaseio.com/v0/newstories.
    *
    * {{{
    * scala> import hackernews4s.v0._
    * scala> val ids: Seq[ItemId] = HackerNews.getItemIdsForNewStories()
-   * scala> ids.size
-   * res0: Int = 500
+   * scala> ids.size >= 400
+   * res0: Boolean = true
    * }}}
    */
   def getItemIdsForNewStories(): Seq[ItemId] = {
@@ -143,7 +143,7 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves HackerNews stories' item ids from Ask Stories API.
-   * The current new 500 stories are at https://hacker-news.firebaseio.com/v0/askstories.
+   * The current new 400+ stories are at https://hacker-news.firebaseio.com/v0/askstories.
    *
    * {{{
    * scala> import hackernews4s.v0._
@@ -168,7 +168,7 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves HackerNews stories' item ids from Show Stories API.
-   * The current new 500 stories are at https://hacker-news.firebaseio.com/v0/showstories.
+   * The current new 400+ stories are at https://hacker-news.firebaseio.com/v0/showstories.
    *
    * {{{
    * scala> import hackernews4s.v0._
@@ -193,7 +193,7 @@ trait HackerNews extends Logging {
 
   /**
    * Retrieves HackerNews stories' item ids from Job Stories API.
-   * The current new 500 stories are at https://hacker-news.firebaseio.com/v0/jobstories.
+   * The current new 400+ stories are at https://hacker-news.firebaseio.com/v0/jobstories.
    *
    * {{{
    * scala> import hackernews4s.v0._

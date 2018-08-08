@@ -1,23 +1,22 @@
-lazy val skinnyVersion = "2.3.0-RC1"
+lazy val skinnyVersion = "3.0.0"
 
 lazy val root = (project in file(".")).settings(
   organization := "com.github.seratch",
   name := "hackernews4s",
-  version := "0.6.1",
-  scalaVersion := "2.12.0",
-  crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6"),
+  version := "0.7.0",
+  scalaVersion := "2.12.6",
+  crossScalaVersions := Seq("2.12.6", "2.11.12"),
   libraryDependencies ++= Seq(
     "org.skinny-framework" %% "skinny-http-client" % skinnyVersion,
     "org.skinny-framework" %% "skinny-json"        % skinnyVersion,
-    "ch.qos.logback"       %  "logback-classic"    % "1.1.+"  % "test",
-    "org.scalatest"        %% "scalatest"          % "3.0.0"  % "test",
+    "ch.qos.logback"       %  "logback-classic"    % "1.2.+"  % "test",
+    "org.scalatest"        %% "scalatest"          % "3.0.+"  % "test",
     "org.scalacheck"       %% "scalacheck"         % "1.13.+" % "test"
   ),
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   initialCommands := """import hackernews4s.v0._""",
   parallelExecution in Test := false,
   logBuffered in Test := false,
-  doctestWithDependencies := false,
   doctestTestFramework := DoctestTestFramework.ScalaTest,
   publishMavenStyle := true,
   pomIncludeRepository := { x => false },
@@ -40,4 +39,4 @@ lazy val root = (project in file(".")).settings(
       <url>http://git.io/sera</url>
     </developer>
   </developers>
-).settings(scalariformSettings)
+)
